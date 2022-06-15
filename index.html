@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full grid font-['DM Sans']">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,13 +28,12 @@
                     // set proportion of data's amount
                     for (const originalBalance of originalBalances) {
                         originalBalance.proportionAmount = Math.floor(originalBalance.amount / balances[0].amount * 5)
-                        console.log(originalBalance)
                     }
 
                     let chart = document.getElementById('chart');
 
                     let today = new Date().getDay()
-                    originalBalances[today].isToday = true;
+                    originalBalances[today - 1].isToday = true;
                     for (const originalBalance of originalBalances) {
                         let balanceDiv = document.createElement('div');
                         balanceDiv.classList.add('self-end')
@@ -94,11 +93,8 @@
         }
     </style>
 </head>
-<body class="flex flex-col justify-center bg-cream font-[18px]" onload="onload()">
-<header class="mx-auto my-10 text-[30px]">
-    Frontend Mentor Challenge - Expenses chart component
-</header>
-<main class="mx-auto w-[500px]">
+<body class="flex flex-col justify-center bg-cream font-[18px] my-auto" onload="onload()">
+<main class="mx-auto my-auto w-[500px]">
     <div class="bg-soft-red mx-auto rounded-2xl">
         <div class="p-6 grid grid-cols-2">
             <div class="text-white">
@@ -110,7 +106,7 @@
     </div>
     <div class="bg-very-pale-orange mx-auto rounded-2xl mt-3 medium-brown">
         <div class="flex flex-col p-6 ml-3">
-            <div class="text-4xl font-medium dark-brown mb-6">Spending - Last 7 days</div>
+            <div class="text-3xl font-[400] dark-brown mb-6">Spending - Last 7 days</div>
             <div id="chart" class="grid grid-cols-7 text-center my-3"></div>
             <hr class="my-6">
             <div class="text-xl">
@@ -126,12 +122,6 @@
         </div>
     </div>
 </main>
-<footer class="mx-auto mt-9">
-    <span>Made by Frank Wang</span>
-    <a href="https://github.com/std95174" target="_blank">
-        <img src="https://github.githubassets.com/favicons/favicon-dark.png" class="bg-black inline-block rounded-full"
-             alt="icon">
-    </a>
-</footer>
+<footer></footer>
 </body>
 </html>
