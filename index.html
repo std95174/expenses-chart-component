@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <title>Frontend Mentor | Expenses chart component</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="application/javascript">
+        function onload() {
+            fetch("data.json")
+                .then(response => response.json())
+                .then(balances => {
+                    let total = 0;
+                    for (const balance of balances) {
+                        total += balance.amount;
+                    }
+                    document.getElementById('balance').innerText = '$0';
+                    document.getElementById('total').innerText = `$${total}`;
+
+                    // sort the data
+                    let originalBalances = Object.assign([], balances);
+                    balances.sort((a, b) => {
+                        return a.amount - b.amount
+                    })
+
+                    // set proportion of data's amount
+                    for (const originalBalance of originalBalances) {
+                        originalBalance.proportionAmount = Math.floor(originalBalance.amount / balances[0].amount * 5)
+                        console.log(originalBalance)
+                    }
+
+                    let chart = document.getElementById('chart');
+
+                    let today = new Date().getDay()
+                    originalBalances[today].isToday = true;
+                    for (const originalBalance of originalBalances) {
+                        let balanceDiv = document.createElement('div');
+                        balanceDiv.classList.add('self-end')
+
+                        let barDiv = document.createElement('div');
+                        barDiv.classList.add('bg-soft-red', 'w-12', 'mx-auto', 'rounded', 'cursor-pointer', `h-[${originalBalance.proportionAmount}rem]`);
+                        barDiv.classList.add(`before:hover:content-[\'$${originalBalance.amount}\']`, 'before:relative', 'before:bottom-8', 'before:bg-black', 'before:rounded', 'before:text-white', 'before:hover:p-1')
+                        barDiv.classList.add('before:right-1');
+
+                        if (originalBalance.isToday) {
+                            barDiv.classList.add('bg-cyan')
+                        } else {
+                            barDiv.classList.add('bg-soft-red')
+                        }
+
+                        let dayDiv = document.createElement('span');
+                        dayDiv.innerText = originalBalance.day;
+
+                        balanceDiv.appendChild(barDiv);
+                        balanceDiv.appendChild(dayDiv);
+                        chart.appendChild(balanceDiv)
+                    }
+                })
+        }
+    </script>
+    <style>
+        .bg-soft-red {
+            background-color: hsl(10, 79%, 65%);
+        }
+
+        .bg-soft-red:hover {
+            background-color: hsl(10, 79%, 75%);
+        }
+
+        .bg-cyan {
+            background-color: hsl(186, 34%, 60%);
+        }
+
+        .bg-cyan:hover {
+            background-color: hsl(186, 34%, 70%);
+        }
+
+        .dark-brown {
+            color: hsl(25, 47%, 15%);
+        }
+
+        .medium-brown {
+            color: hsl(28, 10%, 53%);
+        }
+
+        .bg-cream {
+            background-color: hsl(27, 66%, 92%);
+        }
+
+        .bg-very-pale-orange {
+            background-color: hsl(33, 100%, 98%);
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-center bg-cream font-[18px]" onload="onload()">
+<header class="mx-auto my-10 text-[30px]">
+    Frontend Mentor Challenge - Expenses chart component
+</header>
+<main class="mx-auto w-[500px]">
+    <div class="bg-soft-red mx-auto rounded-2xl">
+        <div class="p-6 grid grid-cols-2">
+            <div class="text-white">
+                <div>My Balance</div>
+                <div id="balance" class="text-2xl"></div>
+            </div>
+            <img src="images/logo.svg" alt="logo" class="justify-self-end">
+        </div>
+    </div>
+    <div class="bg-very-pale-orange mx-auto rounded-2xl mt-3 medium-brown">
+        <div class="flex flex-col p-6 ml-3">
+            <div class="text-4xl font-medium dark-brown mb-6">Spending - Last 7 days</div>
+            <div id="chart" class="grid grid-cols-7 text-center my-3"></div>
+            <hr class="my-6">
+            <div class="text-xl">
+                Total this month
+            </div>
+            <div class="grid grid-cols-2">
+                <span id="total" class="text-5xl font-[700] dark-brown"></span>
+                <div class="justify-self-end text-right">
+                    <div class="text-xl dark-brown">+2.4%</div>
+                    <div>from last month</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="mx-auto mt-9">
+    <span>Made by Frank Wang</span>
+    <a href="https://github.com/std95174" target="_blank">
+        <img src="https://github.githubassets.com/favicons/favicon-dark.png" class="bg-black inline-block rounded-full"
+             alt="icon">
+    </a>
+</footer>
+</body>
+</html>
