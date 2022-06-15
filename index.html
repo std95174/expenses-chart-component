@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full grid font-['DM Sans']">
+<html lang="en" class="h-full grid">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,22 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
     <title>Frontend Mentor | Expenses chart component</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="index.css"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {},
+                colors: {
+                    "soft-red": "hsl(10, 79%, 65%)",
+                    cyan: "hsl(186, 34%, 60%)",
+                    "dark-brown": "hsl(25, 47%, 15%)",
+                    "medium-brown": "hsl(28, 10%, 53%)",
+                    cream: "hsl(27, 66%, 92%)",
+                    "very-pale-orange": "hsl(33, 100%, 98%)",
+                },
+            },
+        };
+    </script>
     <script type="application/javascript">
         function onload() {
             fetch("data.json")
@@ -39,9 +55,9 @@
                         balanceDiv.classList.add('self-end')
 
                         let barDiv = document.createElement('div');
-                        barDiv.classList.add('bg-soft-red', 'w-12', 'mx-auto', 'rounded', 'cursor-pointer', `h-[${originalBalance.proportionAmount}rem]`);
-                        barDiv.classList.add(`before:hover:content-[\'$${originalBalance.amount}\']`, 'before:relative', 'before:bottom-8', 'before:bg-black', 'before:rounded', 'before:text-white', 'before:hover:p-1')
-                        barDiv.classList.add('before:right-1');
+                        barDiv.classList.add('w-12', 'mx-auto', 'rounded', 'cursor-pointer', `h-[${originalBalance.proportionAmount}rem]`);
+                        barDiv.classList.add(`before:hover:content-[\'$${originalBalance.amount}\']`, 'before:relative', 'before:bottom-8', 'before:bg-dark-brown', 'before:rounded', 'before:text-very-pale-orange', 'before:hover:p-1')
+                        barDiv.classList.add('before:right-1', 'hover:bg-opacity-60');
 
                         if (originalBalance.isToday) {
                             barDiv.classList.add('bg-cyan')
@@ -59,63 +75,30 @@
                 })
         }
     </script>
-    <style>
-        .bg-soft-red {
-            background-color: hsl(10, 79%, 65%);
-        }
-
-        .bg-soft-red:hover {
-            background-color: hsl(10, 79%, 75%);
-        }
-
-        .bg-cyan {
-            background-color: hsl(186, 34%, 60%);
-        }
-
-        .bg-cyan:hover {
-            background-color: hsl(186, 34%, 70%);
-        }
-
-        .dark-brown {
-            color: hsl(25, 47%, 15%);
-        }
-
-        .medium-brown {
-            color: hsl(28, 10%, 53%);
-        }
-
-        .bg-cream {
-            background-color: hsl(27, 66%, 92%);
-        }
-
-        .bg-very-pale-orange {
-            background-color: hsl(33, 100%, 98%);
-        }
-    </style>
 </head>
-<body class="flex flex-col justify-center bg-cream font-[18px] my-auto" onload="onload()">
+<body class="flex flex-col justify-center bg-cream font-[18px] my-auto text-medium-brown" onload="onload()">
 <main class="mx-auto my-auto w-[500px]">
     <div class="bg-soft-red mx-auto rounded-2xl">
         <div class="p-6 grid grid-cols-2">
-            <div class="text-white">
+            <div class="text-very-pale-orange">
                 <div>My Balance</div>
                 <div id="balance" class="text-2xl"></div>
             </div>
             <img src="images/logo.svg" alt="logo" class="justify-self-end">
         </div>
     </div>
-    <div class="bg-very-pale-orange mx-auto rounded-2xl mt-3 medium-brown">
+    <div class="bg-very-pale-orange mx-auto rounded-2xl mt-3">
         <div class="flex flex-col p-6 ml-3">
-            <div class="text-3xl font-[400] dark-brown mb-6">Spending - Last 7 days</div>
-            <div id="chart" class="grid grid-cols-7 text-center my-3"></div>
+            <div class="text-3xl font-[400] text-dark-brown mb-6">Spending - Last 7 days</div>
+            <div id="chart" class="grid grid-cols-7 text-center my-3 text-medium-brown"></div>
             <hr class="my-6">
             <div class="text-xl">
                 Total this month
             </div>
             <div class="grid grid-cols-2">
-                <span id="total" class="text-5xl font-[700] dark-brown"></span>
+                <span id="total" class="text-5xl font-[700] text-dark-brown"></span>
                 <div class="justify-self-end text-right">
-                    <div class="text-xl dark-brown">+2.4%</div>
+                    <div class="text-xl text-dark-brown">+2.4%</div>
                     <div>from last month</div>
                 </div>
             </div>
